@@ -27,7 +27,6 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
@@ -73,16 +72,9 @@ public class SignupActivity extends AppCompatActivity {
                                 Toast.makeText(SignupActivity.this, "Successfully created account", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                                 startActivity(intent);
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
                                 if (!task.isSuccessful()) {
                                     Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
-                                } else {
-//                                    Toast.makeText(password)
-                                //                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
-//                                    finish();
                                 }
                             }
                         });

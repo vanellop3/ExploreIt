@@ -30,7 +30,7 @@ public class RecyclerVIew_Config {
 
     class PlaceItemView extends RecyclerView.ViewHolder {
         private TextView title;
-        private TextView description;
+//        private TextView description;
         private ImageView image;
 
         private String key;
@@ -40,14 +40,14 @@ public class RecyclerVIew_Config {
                     inflate(R.layout.card_items, parent, false));
 
             title = (TextView) itemView.findViewById(R.id.post_title_txtview);
-            description = (TextView) itemView.findViewById(R.id.post_desc_txtview);
+//            description = (TextView) itemView.findViewById(R.id.post_desc_txtview);
             image = (ImageView) itemView.findViewById(R.id.post_image);
 
         }
 
         public void bind(Place place, String key) {
             title.setText(place.getTitle());
-            description.setText(place.getDesc());
+//            description.setText(place.getDesc());
             String imageUri = place.getImageUrl();
             ImageView ivBasicImage = (ImageView) itemView.findViewById(R.id.post_image);
             Picasso.with(mContext).load(imageUri).into(ivBasicImage);
@@ -77,7 +77,7 @@ public class RecyclerVIew_Config {
             holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // perform ur click here
+                    // perform click here
                     Intent singleActivity = new Intent(mContext, SinglePlaceActivity.class);
                     singleActivity.putExtra("PostID", holder.key);
                     Log.i("postIdd", String.valueOf(holder.key));

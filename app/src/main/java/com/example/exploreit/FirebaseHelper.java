@@ -23,6 +23,31 @@ public class FirebaseHelper {
         void DataIsLoaded(List<Place> places, List<String> keys);
     }
 
+
+    public void showAll(final DataStatus dataStatus) {
+        mReferencePlaces.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                places.clear();
+                List<String> keys = new ArrayList<>();
+                for (DataSnapshot keyNode : snapshot.getChildren()) {
+                    if (keyNode.child("uid") != null) {
+                        keys.add(keyNode.getKey());
+                        Place place = keyNode.getValue(Place.class);
+                        places.add(place);
+                    }
+                }
+                dataStatus.DataIsLoaded(places, keys);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
     public FirebaseHelper() {
         mDatabase = FirebaseDatabase.getInstance();
         mReferencePlaces = mDatabase.getReference().child("/exploreIt");
@@ -36,11 +61,10 @@ public class FirebaseHelper {
                 String loggedUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 List<String> keys = new ArrayList<>();
                 for (DataSnapshot keyNode : snapshot.getChildren()) {
-                    if (keyNode.child("uid") != null) {
+                    if (keyNode.child("uid").getValue() != null) {
                         String creator = keyNode.child("uid").getValue().toString();
                         if (loggedUser.equals(creator)) {
                             keys.add(keyNode.getKey());
-                            Log.i("Etooo", keyNode.toString());
                             Place place = keyNode.getValue(Place.class);
                             places.add(place);
                         }
@@ -51,7 +75,7 @@ public class FirebaseHelper {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+            Log.i("Database error appear", String.valueOf(error));
             }
         });
     }

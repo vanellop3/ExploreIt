@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,11 +24,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AddPlaceActivity extends AppCompatActivity {
-    // imports
     private ImageButton imageBtn;
     private static final int GALLERY_REQUEST_CODE = 2;
     private Uri uri = null;
@@ -43,12 +44,12 @@ public class AddPlaceActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseUsers;
     private FirebaseUser mCurrentUser;
+    private String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addplace);
-        // initializing objects
         postBtn = (Button)findViewById(R.id.postBtn);
         textDesc = (EditText)findViewById(R.id.textDesc);
         textTitle = (EditText)findViewById(R.id.textTitle);
@@ -72,7 +73,6 @@ public class AddPlaceActivity extends AppCompatActivity {
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AddPlaceActivity.this, "POSTING...", Toast.LENGTH_LONG).show();
                 final String PostTitle = textTitle.getText().toString().trim();
                 final String PostDesc = textDesc.getText().toString().trim();
                 final String PostAuthor = textAuthor.getText().toString().trim();
@@ -86,7 +86,6 @@ public class AddPlaceActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri downloadPhotoUrl) {
                                     final DatabaseReference newPost = databaseRef.push();
-                                    Log.i("title",downloadPhotoUrl.toString());
                                     //adding post contents to database reference
                                     mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                                         @Override
@@ -95,6 +94,7 @@ public class AddPlaceActivity extends AppCompatActivity {
                                             newPost.child("desc").setValue(PostDesc);
                                             newPost.child("imageUrl").setValue(downloadPhotoUrl.toString());
                                             newPost.child("uid").setValue(mCurrentUser.getUid());
+                                            newPost.child("creationDate").setValue(timestamp);
                                             newPost.child("username").setValue(PostAuthor)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
@@ -119,6 +119,8 @@ public class AddPlaceActivity extends AppCompatActivity {
                         }
                     });
 
+                }else{
+                    Toast.makeText(getApplicationContext(), "Add data to all fields!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -36,6 +36,17 @@
             android:inputType="textPassword" />
 
         <Button
+            android:id="@+id/sign_up_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Register"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:backgroundTint="#2B5E75" />
+
+        <Button
             android:id="@+id/sign_in_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -45,17 +56,6 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15dp"
-            app:backgroundTint="#2B5E75" />
-
-        <Button
-            android:id="@+id/sign_up_button"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Register"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
             app:backgroundTint="#2B5E75" />
 
     </LinearLayout>

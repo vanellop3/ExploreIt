@@ -20,14 +20,23 @@
             android:id="@+id/singleImageview"/>
 
         <TextView
-            android:layout_marginTop="10dp"
+            android:id="@+id/singleTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/singleTitle"
-            android:textStyle="bold"
-            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:text="Post Title"
-            android:textColor="#100d0d"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#100d0d"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/singleDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Creation Date"
+            android:textSize="10sp" />
 
         <TextView
             android:layout_marginTop="10dp"
